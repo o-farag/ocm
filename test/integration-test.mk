@@ -27,24 +27,24 @@ clean-integration-test:
 clean: clean-integration-test
 
 test-registration-integration: ensure-kubebuilder-tools
-	go test -c ./test/registration/integration -o ./registration-integration.test
+	go test -c ./test/integration/registration -o ./registration-integration.test
 	./registration-integration.test -ginkgo.slowSpecThreshold=15 -ginkgo.v -ginkgo.failFast
 .PHONY: test-registration-integration
 
 test-work-integration: ensure-kubebuilder-tools
-	go test -c ./test/work/integration -o ./work-integration.test
+	go test -c ./test/integration/work -o ./work-integration.test
 	./work-integration.test -ginkgo.slowSpecThreshold=15 -ginkgo.v -ginkgo.failFast
 .PHONY: test-work-integration
 
 test-placement-integration: ensure-kubebuilder-tools
-	go test -c ./test/placement/integration -o ./placement-integration.test
+	go test -c ./test/integration/placement -o ./placement-integration.test
 	./placement-integration.test -ginkgo.slowSpecThreshold=15 -ginkgo.v -ginkgo.failFast
 .PHONY: test-placement-integration
 
 test-registration-operator-integration: ensure-kubebuilder-tools
-	go test -c ./test/registration-operator/integration -o ./registration-operator-integration.test
+	go test -c ./test/integration/operator -o ./registration-operator-integration.test
 	./registration-operator-integration.test -ginkgo.slowSpecThreshold=15 -ginkgo.v -ginkgo.failFast
 .PHONY: test-registration-operator-integration
 
-test-integration: ensure-kubebuilder-tools test-registration-operator-integration test-registration-integration test-placement-integration test-work-integration
+test-integration: test-registration-operator-integration test-registration-integration test-placement-integration test-work-integration
 .PHONY: test-integration
