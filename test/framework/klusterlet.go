@@ -223,7 +223,7 @@ func CleanKlusterletRelatedResources(
 	Expect(err).To(BeNil())
 
 	Eventually(func() error {
-		_, err := spoke.OperatorClient.OperatorV1().Klusterlets().Get(context.TODO(), klusterletName, metav1.GetOptions{})
+		k, err := spoke.OperatorClient.OperatorV1().Klusterlets().Get(context.TODO(), klusterletName, metav1.GetOptions{})
 		if apierrors.IsNotFound(err) {
 			klog.Infof("klusterlet %s deleted successfully", klusterletName)
 			return nil
@@ -232,6 +232,7 @@ func CleanKlusterletRelatedResources(
 			klog.Infof("get klusterlet %s error: %v", klusterletName, err)
 			return err
 		}
+		klog.Info(k.Finalizers)
 		return fmt.Errorf("klusterlet %s still exists", klusterletName)
 	}).Should(Succeed())
 
